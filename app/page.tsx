@@ -90,8 +90,14 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="text-center mt-6">
+        <div className="text-center mt-6 space-y-2">
+          <p className="text-base text-gray-800 font-semibold">
+            💫 Cada día una nueva maravilla del universo dedicada para ti 💫
+          </p>
           <p className="text-sm text-gray-600">
+            Regresa mañana para descubrir la siguiente imagen que tiene el universo para nosotros.
+          </p>
+          <p className="text-xs text-gray-500">
             Imagen del día cortesía de NASA • {apod.date}
           </p>
         </div>
