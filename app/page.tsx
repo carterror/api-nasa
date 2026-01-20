@@ -20,9 +20,8 @@ export default async function Home() {
         <div className="text-center mb-8 animate-fade-in">
           <div className="mb-4">
             <h1 className="text-6xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 mb-2">
-              CarAna
+              Carlos & Ana
             </h1>
-            <p className="text-pink-400 text-sm tracking-widest">Carlos & Ana</p>
           </div>
           <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 mb-4">
             Para el Amor de Mi Vida 💕
@@ -39,7 +38,21 @@ export default async function Home() {
             </span>
           </div>
         </div>
-
+            <div className="mt-8 mb-8">
+              <div className="rounded-2xl overflow-hidden shadow-lg">
+                <iframe 
+                  data-testid="embed-iframe" 
+                  style={{borderRadius: '12px'}} 
+                  src="https://open.spotify.com/embed/playlist/0tbbciiqCUZciVTS3LdMvE?utm_source=generator" 
+                  width="100%" 
+                  height="352" 
+                  frameBorder="0" 
+                  allowFullScreen={true}
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                  loading="lazy"
+                ></iframe>
+              </div>
+            </div>
         <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden">
           <div className="relative w-full h-96 md:h-[500px]">
             <Image
@@ -67,25 +80,6 @@ export default async function Home() {
               <p className="text-center text-gray-800 italic text-lg">
                 "Cada día descubro algo nuevo y maravilloso en el universo, pero nada se compara con la maravilla de estar contigo. Eres mi estrella más brillante." ✨
               </p>
-            </div>
-
-            <div className="mt-8">
-              <h3 className="text-2xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 mb-4">
-                Nuestra Música 🎵
-              </h3>
-              <div className="rounded-2xl overflow-hidden shadow-lg">
-                <iframe 
-                  data-testid="embed-iframe" 
-                  style={{borderRadius: '12px'}} 
-                  src="https://open.spotify.com/embed/playlist/0tbbciiqCUZciVTS3LdMvE?utm_source=generator" 
-                  width="100%" 
-                  height="352" 
-                  frameBorder="0" 
-                  allowFullScreen={true}
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                  loading="lazy"
-                ></iframe>
-              </div>
             </div>
           </div>
         </div>
