@@ -11,7 +11,9 @@ interface NasaApod {
 }
 
 export default async function Home() {
-  const response = await fetch('https://api.nasa.gov/planetary/apod?api_key=pNTVFS4fuz45l4bpcHRF1ZCAVomhliKLd8X7cqAR');
+  const response = await fetch('https://api.nasa.gov/planetary/apod?api_key=pNTVFS4fuz45l4bpcHRF1ZCAVomhliKLd8X7cqAR', {
+    cache: 'no-store'
+  });
   const apod: NasaApod = await response.json();
 
   return (
