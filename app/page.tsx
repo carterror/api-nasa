@@ -40,21 +40,57 @@ export default async function Home() {
             </span>
           </div>
         </div>
-            <div className="mt-8 mb-8">
-              <div className="rounded-2xl overflow-hidden shadow-lg">
-                <iframe 
-                  data-testid="embed-iframe" 
-                  style={{borderRadius: '12px'}} 
-                  src="https://open.spotify.com/embed/playlist/0tbbciiqCUZciVTS3LdMvE?utm_source=generator" 
-                  width="100%" 
-                  height="352" 
-                  frameBorder="0" 
-                  allowFullScreen={true}
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                  loading="lazy"
-                ></iframe>
-              </div>
+        
+        {/* Custom Song Player */}
+        <div className="mb-8 bg-gradient-to-r from-pink-200 via-purple-200 to-indigo-200 rounded-3xl p-6 shadow-2xl border-4 border-white/50">
+          <div className="text-center mb-4">
+            <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 mb-2">
+              🎵 Una Canción Especial Para Ti 🎵
+            </h3>
+            <p className="text-gray-700 font-medium">
+              Compuesta con todo mi amor, desde mi corazón al tuyo
+            </p>
+          </div>
+          
+          <div className="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-lg">
+            <audio 
+              controls
+              autoPlay
+              loop
+              className="w-full"
+              style={{
+                filter: 'hue-rotate(280deg) saturate(1.5)',
+                height: '54px'
+              }}
+            >
+              <source src="/music.wav" type="audio/wav" />
+              Tu navegador no soporta el reproductor de audio.
+            </audio>
+            
+            <div className="mt-4 text-center">
+              <p className="text-sm text-gray-600 italic">
+                💝 Creada especialmente para Ana, mi amor infinito 💝
+              </p>
             </div>
+          </div>
+                  <div className="mt-8 mb-8">
+          <div className="rounded-2xl overflow-hidden shadow-lg">
+            <iframe 
+              data-testid="embed-iframe" 
+              style={{borderRadius: '12px'}} 
+              src="https://open.spotify.com/embed/playlist/0tbbciiqCUZciVTS3LdMvE?utm_source=generator" 
+              width="100%" 
+              height="352" 
+              frameBorder="0" 
+              allowFullScreen={true}
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+        </div>
+
+
         <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden">
           <div className="relative w-full h-96 md:h-[500px]">
             <Image
