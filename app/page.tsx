@@ -90,6 +90,27 @@ export default async function Home() {
         </div>
         </div>
 
+        {/* TikTok - Pedida de Matrimonio */}
+        <div className="mb-8 bg-gradient-to-r from-pink-200 via-purple-200 to-indigo-200 rounded-3xl p-6 shadow-2xl border-4 border-white/50">
+          <div className="text-center mb-4">
+            <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 mb-2">
+              💍 Nuestra Pedida de Matrimonio 💍
+            </h3>
+            <p className="text-gray-700 font-medium">
+              El momento más especial de nuestras vidas
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <iframe
+              src="https://www.tiktok.com/embed/v2/7608984408233692434"
+              className="rounded-2xl shadow-lg"
+              style={{ maxWidth: '605px', minWidth: '325px', width: '100%', height: '700px', border: 'none' }}
+              allowFullScreen
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
 
         <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden">
           <div className="relative w-full h-96 md:h-[500px]">
