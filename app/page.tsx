@@ -102,19 +102,26 @@ export default async function Home() {
               El momento más especial de nuestras vidas
             </p>
           </div>
-          <div className="flex justify-center">
+          <div className="flex flex-col gap-6 overflow-y-auto rounded-2xl" style={{ height: '750px' }}>
             <iframe
               src="https://www.tiktok.com/embed/v2/7608984408233692434"
-              className="rounded-2xl shadow-lg"
-              style={{ maxWidth: '605px', minWidth: '325px', width: '100%', height: '700px', border: 'none' }}
+              className="rounded-2xl shadow-lg w-full flex-shrink-0"
+              style={{ height: '100%', border: 'none' }}
               allowFullScreen
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
             ></iframe>
             <iframe
               src="https://www.instagram.com/p/DU6ME6miYWi/embed/"
-              className="rounded-2xl shadow-lg"
-              style={{ maxWidth: '540px', minWidth: '326px', width: '100%', height: '680px', border: 'none' }}
+              className="rounded-2xl shadow-lg w-full flex-shrink-0"
+              style={{ height: '100%', border: 'none' }}
+              allowFullScreen
+              loading="lazy"
+            ></iframe>
+            <iframe
+              src="https://www.instagram.com/p/DU3ZJzMETx2/embed/"
+              className="rounded-2xl shadow-lg w-full flex-shrink-0"
+              style={{ height: '100%', border: 'none' }}
               allowFullScreen
               loading="lazy"
             ></iframe>
