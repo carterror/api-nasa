@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
 import { collectRows, getQueryErrorMessage, runD1Query } from "./api/_lib/d1";
 import { getInvitedGuests } from "./boda/invited-guests";
+import HomeSummaryPanel from "./home-summary-panel";
 
 interface NasaApod {
   date: string;
@@ -146,18 +147,6 @@ export default async function Home() {
     cache: 'no-store'
   });
   const apod: NasaApod = await response.json();
-  const summaryCards = [
-    { label: "Invitados habilitados", value: summary.invitedGuests },
-    { label: "RSVP registrados", value: summary.rsvpTotal },
-    { label: "Asistiran", value: summary.attendingTotal },
-    { label: "No asistiran", value: summary.declinedTotal },
-    { label: "Acompanantes", value: summary.companionTotal },
-    { label: "Comentarios", value: summary.commentsTotal },
-    {
-      label: "Fotos compartidas",
-      value: summary.photosTotal === null ? "No disponible" : summary.photosTotal,
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-indigo-100 flex items-center justify-center p-4">
@@ -184,25 +173,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="mb-8 bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-2xl border border-white/60">
-          <div className="text-center">
-            <p className="text-xs tracking-[0.25em] text-purple-600 uppercase">Resumen privado</p>
-            <h3 className="mt-2 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
-              Estado de invitados y contenido
-            </h3>
-          </div>
-          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {summaryCards.map((item) => (
-              <article
-                key={item.label}
-                className="rounded-2xl border border-purple-100 bg-white/80 p-4 text-center"
-              >
-                <p className="text-xs tracking-[0.15em] text-purple-600 uppercase">{item.label}</p>
-                <p className="mt-2 text-3xl font-bold text-gray-800">{item.value}</p>
-              </article>
-            ))}
-          </div>
-        </div>
+        <HomeSummaryPanel summary={summary} />
         
         {/* Custom Song Player */}
         <div className="mb-8 bg-gradient-to-r from-pink-200 via-purple-200 to-indigo-200 rounded-3xl p-6 shadow-2xl border-4 border-white/50">
