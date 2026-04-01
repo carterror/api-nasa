@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Great_Vibes } from "next/font/google";
 import Link from "next/link";
+import CommentsModal from "./comments-modal";
 import RsvpModal from "./rsvp-modal";
 
 const titleFont = Great_Vibes({
@@ -86,6 +87,17 @@ export default function BodaPage() {
 						Solo podran confirmar las personas incluidas en la lista de invitados.
 					</p>
 					<RsvpModal />
+				</section>
+
+				<section className="rounded-3xl border border-[#c9a7ea]/70 bg-white/80 p-6 text-center md:p-8">
+					<p className="text-xs tracking-[0.25em] text-[#8a4ca1] uppercase">Dedicatorias</p>
+					<h2 className="mt-2 text-3xl font-semibold text-[#4f2d84] md:text-4xl">
+						Te leemos con mucho amor
+					</h2>
+					<p className="mx-auto mt-3 max-w-2xl text-base text-[#4a3a6c] md:text-lg">
+						Si quieres dejarnos unas palabras, abre el modal y comparte tu mensaje.
+					</p>
+					<CommentsModal />
 				</section>
 
 				<section className="rounded-3xl border border-dashed border-[#8c5ad7] bg-[#f7efff]/90 p-6 text-center md:p-8">
