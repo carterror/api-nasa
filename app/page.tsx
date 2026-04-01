@@ -1,4 +1,7 @@
 import Image from "next/image";
+import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
+import { collectRows, getQueryErrorMessage, runD1Query } from "./api/_lib/d1";
+import { getInvitedGuests } from "./boda/invited-guests";
 
 interface NasaApod {
   date: string;
@@ -10,12 +13,151 @@ interface NasaApod {
   url: string;
 }
 
+interface WeddingSummary {
+  invitedGuests: number;
+  rsvpTotal: number;
+  attendingTotal: number;
+  declinedTotal: number;
+  companionTotal: number;
+  commentsTotal: number;
+  photosTotal: number | null;
+}
+
+function toNumber(value: unknown): number {
+  const numeric = Number(value ?? 0);
+  return Number.isFinite(numeric) ? numeric : 0;
+}
+
+function getBucketName(): string | undefined {
+  return process.env.AWS_S3_BUCKET ?? process.env.S3_BUCKET ?? process.env.R2_BUCKET_NAME;
+}
+
+function getS3Client(): S3Client {
+  const accountId = process.env.R2_ACCOUNT_ID;
+  const endpoint =
+    process.env.S3_ENDPOINT_URL ??
+    process.env.R2_ENDPOINT_URL ??
+    (accountId ? `https://${accountId}.r2.cloudflarestorage.com` : undefined);
+  const region = process.env.AWS_REGION ?? process.env.S3_REGION ?? "auto";
+  const accessKeyId = process.env.AWS_ACCESS_KEY_ID ?? process.env.R2_ACCESS_KEY_ID;
+  const secretAccessKey =
+    process.env.AWS_SECRET_ACCESS_KEY ?? process.env.R2_SECRET_ACCESS_KEY;
+
+  if ((accessKeyId && !secretAccessKey) || (!accessKeyId && secretAccessKey)) {
+    throw new Error("Debes configurar ambas credenciales: ACCESS_KEY y SECRET_ACCESS_KEY.");
+  }
+
+  return new S3Client({
+    region,
+    endpoint,
+    credentials: accessKeyId && secretAccessKey ? { accessKeyId, secretAccessKey } : undefined,
+  });
+}
+
+async function getPhotosTotal(): Promise<number | null> {
+  try {
+    const bucket = getBucketName();
+    if (!bucket) {
+      return null;
+    }
+
+    const client = getS3Client();
+    const result = await client.send(
+      new ListObjectsV2Command({
+        Bucket: bucket,
+        Prefix: "wedding-photos/",
+        MaxKeys: 1000,
+      }),
+    );
+
+    return (result.Contents ?? []).filter((item) => Boolean(item.Key)).length;
+  } catch {
+    return null;
+  }
+}
+
+async function getWeddingSummary(): Promise<WeddingSummary> {
+  const invitedGuests = getInvitedGuests().length;
+
+  const [rsvpSummary, commentsSummary, photosTotal] = await Promise.all([
+    (async () => {
+      try {
+        const chunks = await runD1Query(
+          "SELECT COUNT(*) AS total, SUM(CASE WHEN attending = 1 THEN 1 ELSE 0 END) AS attending_total, SUM(CASE WHEN attending = 0 THEN 1 ELSE 0 END) AS declined_total, SUM(CASE WHEN attending = 1 THEN guests_count ELSE 0 END) AS companion_total FROM wedding_rsvp;",
+        );
+        const queryError = getQueryErrorMessage(chunks);
+        if (queryError) {
+          return {
+            rsvpTotal: 0,
+            attendingTotal: 0,
+            declinedTotal: 0,
+            companionTotal: 0,
+          };
+        }
+
+        const row = collectRows(chunks)[0] ?? {};
+        return {
+          rsvpTotal: toNumber(row.total),
+          attendingTotal: toNumber(row.attending_total),
+          declinedTotal: toNumber(row.declined_total),
+          companionTotal: toNumber(row.companion_total),
+        };
+      } catch {
+        return {
+          rsvpTotal: 0,
+          attendingTotal: 0,
+          declinedTotal: 0,
+          companionTotal: 0,
+        };
+      }
+    })(),
+    (async () => {
+      try {
+        const chunks = await runD1Query("SELECT COUNT(*) AS total FROM wedding_comments;");
+        const queryError = getQueryErrorMessage(chunks);
+        if (queryError) {
+          return 0;
+        }
+
+        const row = collectRows(chunks)[0] ?? {};
+        return toNumber(row.total);
+      } catch {
+        return 0;
+      }
+    })(),
+    getPhotosTotal(),
+  ]);
+
+  return {
+    invitedGuests,
+    rsvpTotal: rsvpSummary.rsvpTotal,
+    attendingTotal: rsvpSummary.attendingTotal,
+    declinedTotal: rsvpSummary.declinedTotal,
+    companionTotal: rsvpSummary.companionTotal,
+    commentsTotal: commentsSummary,
+    photosTotal,
+  };
+}
+
 export default async function Home() {
   const apiKeyNasa = process.env.NEXT_PUBLIC_KEY_API_NASA;
+  const summary = await getWeddingSummary();
   const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKeyNasa}`, {
     cache: 'no-store'
   });
   const apod: NasaApod = await response.json();
+  const summaryCards = [
+    { label: "Invitados habilitados", value: summary.invitedGuests },
+    { label: "RSVP registrados", value: summary.rsvpTotal },
+    { label: "Asistiran", value: summary.attendingTotal },
+    { label: "No asistiran", value: summary.declinedTotal },
+    { label: "Acompanantes", value: summary.companionTotal },
+    { label: "Comentarios", value: summary.commentsTotal },
+    {
+      label: "Fotos compartidas",
+      value: summary.photosTotal === null ? "No disponible" : summary.photosTotal,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-indigo-100 flex items-center justify-center p-4">
@@ -39,6 +181,26 @@ export default async function Home() {
             <span className="px-4 py-2 bg-white/60 rounded-full text-pink-600 shadow-md">
               All for you 💝
             </span>
+          </div>
+        </div>
+
+        <div className="mb-8 bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-2xl border border-white/60">
+          <div className="text-center">
+            <p className="text-xs tracking-[0.25em] text-purple-600 uppercase">Resumen privado</p>
+            <h3 className="mt-2 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
+              Estado de invitados y contenido
+            </h3>
+          </div>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {summaryCards.map((item) => (
+              <article
+                key={item.label}
+                className="rounded-2xl border border-purple-100 bg-white/80 p-4 text-center"
+              >
+                <p className="text-xs tracking-[0.15em] text-purple-600 uppercase">{item.label}</p>
+                <p className="mt-2 text-3xl font-bold text-gray-800">{item.value}</p>
+              </article>
+            ))}
           </div>
         </div>
         
