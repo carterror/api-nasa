@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Great_Vibes } from "next/font/google";
 import Link from "next/link";
+import RsvpModal from "./rsvp-modal";
 
 const titleFont = Great_Vibes({
 	subsets: ["latin"],
@@ -20,11 +21,11 @@ export const metadata: Metadata = {
 const eventDetails = [
 	{
 		label: "Ceremonia",
-		value: "4:30 p. m. | Iglesia San Miguel",
+		value: "4:30 p. m. | Conocoto, Quito",
 	},
 	{
 		label: "Recepcion",
-		value: "6:30 p. m. | Jardin La Encantada",
+		value: "6:30 p. m. | Conocoto, Quito",
 	},
 	{
 		label: "Codigo de vestimenta",
@@ -32,7 +33,7 @@ const eventDetails = [
 	},
 	{
 		label: "Confirmacion",
-		value: "Antes del 1 de julio al +593981643549",
+		value: "Antes del 1 de junio",
 	},
 ];
 
@@ -74,6 +75,17 @@ export default function BodaPage() {
 							<p className="mt-2 text-xl font-semibold text-[#3f2a64]">{item.value}</p>
 						</article>
 					))}
+				</section>
+
+				<section className="rounded-3xl border border-[#c9a7ea]/70 bg-white/80 p-6 text-center md:p-8">
+					<p className="text-xs tracking-[0.25em] text-[#8a4ca1] uppercase">Confirmacion</p>
+					<h2 className="mt-2 text-3xl font-semibold text-[#4f2d84] md:text-4xl">
+						Confirma tu asistencia
+					</h2>
+					<p className="mx-auto mt-3 max-w-2xl text-base text-[#4a3a6c] md:text-lg">
+						Solo podran confirmar las personas incluidas en la lista de invitados.
+					</p>
+					<RsvpModal />
 				</section>
 
 				<section className="rounded-3xl border border-dashed border-[#8c5ad7] bg-[#f7efff]/90 p-6 text-center md:p-8">

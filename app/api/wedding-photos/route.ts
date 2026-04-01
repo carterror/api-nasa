@@ -78,6 +78,8 @@ export async function GET() {
 				return right - left;
 			})
 			.map((item) => {
+				console.log({ item });
+
 				const key = item.Key as string;
 				return {
 					key,
