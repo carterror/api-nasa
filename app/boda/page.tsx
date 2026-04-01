@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Great_Vibes } from "next/font/google";
 import Link from "next/link";
 import CommentsModal from "./comments-modal";
 import RsvpModal from "./rsvp-modal";
+import WeddingCountdown from "./wedding-countdown";
 
 const titleFont = Great_Vibes({
 	subsets: ["latin"],
@@ -64,6 +65,8 @@ export default function BodaPage() {
 					<p className="text-2xl font-medium text-[#6d43a8] md:text-3xl">agosto 2026</p>
 					<p className="mt-4 text-lg">Comienza a las 12:00 p. m.</p>
 				</section>
+
+				<WeddingCountdown />
 
 				<section className="grid gap-4 md:grid-cols-2">
 					{eventDetails.map((item) => (
