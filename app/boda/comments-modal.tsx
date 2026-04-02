@@ -109,38 +109,38 @@ export default function CommentsModal() {
 			<button
 				type="button"
 				onClick={() => setIsOpen(true)}
-				className="mt-4 inline-flex rounded-xl border border-[#b58bdf] bg-white px-6 py-3 text-lg font-semibold text-[#4f2d84] transition hover:bg-[#f8f0ff]"
+				className="mt-4 inline-flex rounded-xl border border-[#9dc4ea] bg-white px-6 py-3 text-lg font-semibold text-[#1c4f90] transition hover:bg-[#eef6ff]"
 			>
 				Dejarnos un mensaje
 			</button>
 
 			{isOpen ? (
 				<div
-					className="fixed inset-0 z-50 flex items-center justify-center bg-[#1d1034]/70 px-4"
+					className="fixed inset-0 z-50 flex items-center justify-center bg-[#0f2e54]/65 px-4"
 					onClick={() => setIsOpen(false)}
 				>
 					<div
-						className="w-full max-w-xl rounded-3xl border border-[#d5b8f0]/70 bg-white p-6 shadow-[0_16px_40px_rgba(39,15,71,0.35)] md:p-8"
+						className="w-full max-w-xl rounded-3xl border border-[#b8d5f4]/80 bg-white p-6 shadow-[0_16px_40px_rgba(17,50,92,0.3)] md:p-8"
 						onClick={(event) => event.stopPropagation()}
 					>
 						<div className="flex items-start justify-between gap-4">
 							<div>
-								<p className="text-xs tracking-[0.25em] text-[#8a4ca1] uppercase">Mensajes</p>
-								<h3 className="mt-1 text-2xl font-semibold text-[#4f2d84] md:text-3xl">
+								<p className="text-xs tracking-[0.25em] text-[#356ca7] uppercase">Mensajes</p>
+								<h3 className="mt-1 text-2xl font-semibold text-[#1d4f8f] md:text-3xl">
 									Dejanos tu comentario
 								</h3>
 							</div>
 							<button
 								type="button"
 								onClick={() => setIsOpen(false)}
-								className="rounded-lg border border-[#ceb2ee] px-3 py-1 text-sm text-[#4f2d84]"
+								className="rounded-lg border border-[#bad7f5] px-3 py-1 text-sm text-[#1d4f8f]"
 							>
 								Cerrar
 							</button>
 						</div>
 
 						<form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-							<label className="block text-sm font-medium text-[#4b2f76]" htmlFor="comment-name">
+							<label className="block text-sm font-medium text-[#295788]" htmlFor="comment-name">
 								Nombre del invitado
 							</label>
 							<select
@@ -148,7 +148,7 @@ export default function CommentsModal() {
 								value={name}
 								onChange={(event) => setName(event.target.value)}
 								disabled={loadingGuests || invitedGuests.length === 0 || status === "submitting"}
-								className="w-full rounded-xl border border-[#d3b7f0] bg-[#fbf8ff] px-4 py-3 text-[#3f2a64]"
+								className="w-full rounded-xl border border-[#c2ddf7] bg-[#f4f9ff] px-4 py-3 text-[#1f4b7f]"
 							>
 								<option value="">
 									{loadingGuests
@@ -165,7 +165,7 @@ export default function CommentsModal() {
 							</select>
 
 							<div>
-								<label className="block text-sm font-medium text-[#4b2f76]" htmlFor="comment-text">
+								<label className="block text-sm font-medium text-[#295788]" htmlFor="comment-text">
 									Tu mensaje
 								</label>
 								<textarea
@@ -175,15 +175,15 @@ export default function CommentsModal() {
 									maxLength={500}
 									disabled={status === "submitting"}
 									rows={5}
-									className="mt-1 w-full rounded-xl border border-[#d3b7f0] bg-[#fbf8ff] px-4 py-3 text-[#3f2a64]"
+									className="mt-1 w-full rounded-xl border border-[#c2ddf7] bg-[#f4f9ff] px-4 py-3 text-[#1f4b7f]"
 								/>
-								<p className="mt-1 text-right text-xs text-[#6f4caa]">{comment.length}/500</p>
+								<p className="mt-1 text-right text-xs text-[#3f75ac]">{comment.length}/500</p>
 							</div>
 
 							<button
 								type="submit"
 								disabled={!canSubmit || status === "submitting"}
-								className="w-full rounded-xl bg-gradient-to-r from-[#f44fa1] via-[#9255d8] to-[#4f7ad8] px-5 py-3 text-lg font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+								className="w-full rounded-xl bg-gradient-to-r from-[#1f5fa8] via-[#2f79c4] to-[#68a8df] px-5 py-3 text-lg font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
 							>
 								{status === "submitting" ? "Enviando..." : "Enviar mensaje"}
 							</button>
@@ -192,7 +192,7 @@ export default function CommentsModal() {
 						{feedback ? (
 							<p
 								className={`mt-4 text-sm ${
-									status === "error" ? "text-[#a42742]" : "text-[#3f2a64]"
+									status === "error" ? "text-[#9f2a3f]" : "text-[#1f4b7f]"
 								}`}
 							>
 								{feedback}
