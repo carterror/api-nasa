@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Carlos & Ana - Para el Amor de Mi Vida 💕",
   description: "Como el universo es infinito, así es mi amor por ti. Cada día una nueva maravilla del universo dedicada para ti.",
+  robots="follow",
   icons: {
     icon: "/ceo.png",
   },
