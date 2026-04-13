@@ -9,6 +9,9 @@ const bodyFont = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
+	alternates: {
+		canonical: "https://love.carana26.com/boda/fotos",
+	},
 	title: "Galeria de boda | Carlos y Ana",
 	description: "Sube y mira las fotos compartidas por nuestros invitados.",
 };

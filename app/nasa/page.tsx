@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "https://love.carana26.com/nasa",
+  },
+  title: "NASA APOD | Carlos & Ana",
+  description: "Imagen astronómica del día de la NASA.",
+};
 
 interface NasaApod {
   date: string;

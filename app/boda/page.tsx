@@ -17,6 +17,9 @@ const bodyFont = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
+	alternates: {
+		canonical: "https://love.carana26.com/boda",
+	},
 	title: "Invitación de boda | Carlos y Ana",
 	description: "Celebremos juntos nuestra boda. Carlos y Ana.",
 };
