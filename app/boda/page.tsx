@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Great_Vibes } from "next/font/google";
 import Link from "next/link";
 import CommentsModal from "./comments-modal";
+import PlaylistModal from "./playlist-modal";
 import RsvpModal from "./rsvp-modal";
 import WeddingCountdown from "./wedding-countdown";
 
@@ -107,6 +108,17 @@ export default function BodaPage() {
 						Solo podrán confirmar las personas incluidas en la lista de invitados.
 					</p>
 					<RsvpModal />
+				</section>
+
+				<section className="rounded-3xl border border-[#F8DBDD]/80 bg-white/85 p-6 text-center md:p-8">
+					<p className="text-xs tracking-[0.25em] text-[#005a8e] uppercase">Playlist</p>
+					<h2 className="mt-2 text-3xl font-semibold text-[#00345B] md:text-4xl">
+						La canción que no puede faltar
+					</h2>
+					<p className="mx-auto mt-3 max-w-2xl text-base text-[#004d7a] md:text-lg">
+						Ayúdanos a crear la playlist perfecta. ¿Cuál es esa canción que no puede faltar en nuestra boda?
+					</p>
+					<PlaylistModal />
 				</section>
 
 				<section className="rounded-3xl border border-[#F8DBDD]/80 bg-white/85 p-6 text-center md:p-8">

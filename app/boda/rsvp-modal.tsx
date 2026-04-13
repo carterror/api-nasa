@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 interface RsvpApiResponse {
 	invitedGuests?: string[];
@@ -129,7 +130,7 @@ export default function RsvpModal() {
 				Confirmar asistencia
 			</button>
 
-			{isOpen ? (
+			{isOpen ? createPortal(
 				<div
 					className="fixed inset-0 z-50 flex items-center justify-center bg-[#00345B]/65 px-4"
 					onClick={() => setIsOpen(false)}
@@ -258,7 +259,7 @@ export default function RsvpModal() {
 						) : null}
 					</div>
 				</div>
-			) : null}
+		, document.body) : null}
 		</>
 	);
 }
