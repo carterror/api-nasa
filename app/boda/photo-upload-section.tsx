@@ -64,13 +64,13 @@ export default function PhotoUploadSection({ onUploadComplete }: PhotoUploadSect
 	}
 
 	return (
-		<section className="rounded-3xl border border-[#b7d5f5]/80 bg-white/85 p-6 md:p-8">
+		<section className="rounded-3xl border border-[#F8DBDD]/80 bg-white/85 p-6 md:p-8">
 			<div className="text-center">
-				<p className="text-xs tracking-[0.25em] text-[#2f5e96] uppercase">Album colaborativo</p>
-				<h2 className="mt-2 text-3xl font-semibold text-[#1c4e8f] md:text-4xl">
+				<p className="text-xs tracking-[0.25em] text-[#005a8e] uppercase">Album colaborativo</p>
+				<h2 className="mt-2 text-3xl font-semibold text-[#00345B] md:text-4xl">
 					Sube las fotos que tomes en nuestra boda
 				</h2>
-				<p className="mx-auto mt-3 max-w-2xl text-base text-[#325e90] md:text-lg">
+				<p className="mx-auto mt-3 max-w-2xl text-base text-[#004d7a] md:text-lg">
 					Queremos ver cada sonrisa, cada abrazo y cada momento especial desde tu mirada.
 				</p>
 			</div>
@@ -78,10 +78,10 @@ export default function PhotoUploadSection({ onUploadComplete }: PhotoUploadSect
 			<form className="mt-6 space-y-4" onSubmit={handleSubmit}>
 				<label
 					htmlFor="wedding-photos"
-					className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#8bb9e6] bg-[#f2f8ff] px-4 py-8 text-center"
+					className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#F8DBDD] bg-[#fff5f6] px-4 py-8 text-center"
 				>
-					<span className="text-lg font-semibold text-[#1f4e8c]">Seleccionar fotos</span>
-					<span className="mt-2 text-sm text-[#3b6999]">
+					<span className="text-lg font-semibold text-[#00345B]">Seleccionar fotos</span>
+					<span className="mt-2 text-sm text-[#004d7a]">
 						PNG, JPG o HEIC. Maximo 10 fotos por envio.
 					</span>
 					<input
@@ -99,7 +99,7 @@ export default function PhotoUploadSection({ onUploadComplete }: PhotoUploadSect
 					/>
 				</label>
 
-				<div className="rounded-2xl bg-[#eef6ff] p-4 text-sm text-[#295788]">
+				<div className="rounded-2xl bg-[#fff5f6] p-4 text-sm text-[#00345B]">
 					<p>Fotos seleccionadas: {files.length}</p>
 					<p>Peso aproximado: {totalSizeMb} MB</p>
 				</div>
@@ -107,7 +107,7 @@ export default function PhotoUploadSection({ onUploadComplete }: PhotoUploadSect
 				<button
 					type="submit"
 					disabled={status === "uploading"}
-					className="w-full rounded-xl bg-gradient-to-r from-[#1f5fa8] via-[#2f79c4] to-[#68a8df] px-5 py-3 text-lg font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+					className="w-full rounded-xl bg-[#00345B] px-5 py-3 text-lg font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
 				>
 					{status === "uploading" ? "Subiendo..." : "Enviar fotos"}
 				</button>
@@ -116,7 +116,7 @@ export default function PhotoUploadSection({ onUploadComplete }: PhotoUploadSect
 			{feedback ? (
 				<p
 					className={`mt-4 text-center text-sm md:text-base ${
-						status === "error" ? "text-[#9f2a3f]" : "text-[#1f4b7f]"
+						status === "error" ? "text-[#9f2a3f]" : "text-[#004d7a]"
 					}`}
 				>
 					{feedback}

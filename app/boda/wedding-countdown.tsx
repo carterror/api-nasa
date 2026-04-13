@@ -70,10 +70,10 @@ export default function WeddingCountdown() {
 
 	if (timeLeft.isComplete) {
 		return (
-			<section className="relative overflow-hidden rounded-3xl border border-[#b9d7f5] bg-gradient-to-br from-white via-[#f4f9ff] to-[#e9f3ff] p-6 text-center shadow-[0_12px_40px_rgba(25,72,130,0.12)] md:p-8">
-				<p className="text-xs tracking-[0.25em] text-[#346aa5] uppercase">Cuenta regresiva</p>
-				<h2 className="mt-2 text-3xl font-semibold text-[#1c4f90] md:text-4xl">Llego nuestro gran dia</h2>
-				<p className="mx-auto mt-3 max-w-xl text-base text-[#3e6795] md:text-lg">
+		<section className="relative overflow-hidden rounded-3xl border border-[#F8DBDD] bg-gradient-to-br from-white via-[#fff8f8] to-[#faeaeb] p-6 text-center shadow-[0_12px_40px_rgba(0,52,91,0.12)] md:p-8">
+			<p className="text-xs tracking-[0.25em] text-[#005a8e] uppercase">Cuenta regresiva</p>
+			<h2 className="mt-2 text-3xl font-semibold text-[#00345B] md:text-4xl">Llego nuestro gran dia</h2>
+			<p className="mx-auto mt-3 max-w-xl text-base text-[#004d7a] md:text-lg">
 					Hoy celebramos nuestro amor contigo. Gracias por ser parte de esta historia.
 				</p>
 			</section>
@@ -81,14 +81,14 @@ export default function WeddingCountdown() {
 	}
 
 	return (
-		<section className="relative overflow-hidden rounded-3xl border border-[#b9d7f5] bg-gradient-to-br from-white via-[#f4f9ff] to-[#e9f3ff] p-6 shadow-[0_12px_40px_rgba(25,72,130,0.12)] md:p-8">
-			<div className="pointer-events-none absolute -top-14 -left-12 h-36 w-36 rounded-full bg-[#d6eaff]/70 blur-2xl" />
-			<div className="pointer-events-none absolute -right-10 -bottom-14 h-40 w-40 rounded-full bg-[#9ac7f1]/40 blur-2xl" />
+		<section className="relative overflow-hidden rounded-3xl border border-[#F8DBDD] bg-gradient-to-br from-white via-[#fff8f8] to-[#faeaeb] p-6 shadow-[0_12px_40px_rgba(0,52,91,0.12)] md:p-8">
+			<div className="pointer-events-none absolute -top-14 -left-12 h-36 w-36 rounded-full bg-[#F8DBDD]/70 blur-2xl" />
+			<div className="pointer-events-none absolute -right-10 -bottom-14 h-40 w-40 rounded-full bg-[#F8DBDD]/40 blur-2xl" />
 
 			<div className="relative text-center">
-				<p className="text-xs tracking-[0.25em] text-[#346aa5] uppercase">Cuenta regresiva</p>
-				<h2 className="mt-2 text-3xl font-semibold text-[#1c4f90] md:text-4xl">Falta poquito para la boda</h2>
-				<p className="mx-auto mt-3 max-w-xl text-base text-[#3e6795] md:text-lg">
+				<p className="text-xs tracking-[0.25em] text-[#005a8e] uppercase">Cuenta regresiva</p>
+				<h2 className="mt-2 text-3xl font-semibold text-[#00345B] md:text-4xl">Falta poquito para la boda</h2>
+				<p className="mx-auto mt-3 max-w-xl text-base text-[#004d7a] md:text-lg">
 					Cada segundo nos acerca a celebrar juntos uno de los dias mas felices de nuestras vidas.
 				</p>
 			</div>
@@ -97,12 +97,12 @@ export default function WeddingCountdown() {
 				{blocks.map((block) => (
 					<article
 						key={block.label}
-						className="rounded-2xl border border-white/85 bg-white/85 p-4 text-center shadow-[0_8px_22px_rgba(38,94,156,0.12)] backdrop-blur-sm"
+						className="rounded-2xl border border-white/85 bg-white/85 p-4 text-center shadow-[0_8px_22px_rgba(0,52,91,0.12)] backdrop-blur-sm"
 					>
-						<p className="text-4xl font-semibold leading-none text-[#20518e] md:text-5xl">
+						<p className="text-4xl font-semibold leading-none text-[#00345B] md:text-5xl">
 							{formatNumber(block.value)}
 						</p>
-						<p className="mt-2 text-xs tracking-[0.2em] text-[#3e74ab] uppercase">{block.label}</p>
+						<p className="mt-2 text-xs tracking-[0.2em] text-[#005a8e] uppercase">{block.label}</p>
 					</article>
 				))}
 			</div>

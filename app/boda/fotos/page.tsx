@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function BodaFotosPage() {
 	return (
 		<main
-			className={`${bodyFont.className} min-h-screen bg-[radial-gradient(circle_at_20%_0%,_#ffffff_0%,_#eaf4ff_30%,_#dbeeff_58%,_#c5e2ff_100%)] px-6 py-10 text-[#11315b] md:px-10`}
+			className={`${bodyFont.className} min-h-screen bg-[radial-gradient(circle_at_20%_0%,_#ffffff_0%,_#fdf4f5_30%,_#faeaeb_58%,_#F8DBDD_100%)] px-6 py-10 text-[#00345B] md:px-10`}
 		>
 			<GalleryView />
 		</main>
