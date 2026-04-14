@@ -9,6 +9,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: 'https://love.carana26.com/boda/fotos',
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.6,
+    },
+    {
       url: 'https://love.carana26.com',
       lastModified: new Date(),
       changeFrequency: 'monthly',
