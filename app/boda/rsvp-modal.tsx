@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
+import { flagBodaInvitation } from "../flags";
 
 interface RsvpApiResponse {
 	invitedGuests?: string[];
@@ -37,10 +38,11 @@ export default function RsvpModal() {
 		if (!isOpen || invitedGuests.length > 0) {
 			return;
 		}
-
+		
 		let ignore = false;
 
 		async function loadGuests() {
+			await flagBodaInvitation()
 			setLoadingGuests(true);
 			setFeedback("");
 
