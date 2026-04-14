@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Great_Vibes } from "next/font/google";
 import Link from "next/link";
-import { flagBodaInvitation } from "../flags";
 import CommentsModal from "./comments-modal";
 import PlaylistModal from "./playlist-modal";
 import RsvpModal from "./rsvp-modal";
@@ -49,8 +48,6 @@ const eventDetails = [
 ];
 
 export default async function BodaPage() {
-	const isRsvpEnabled = Boolean(await flagBodaInvitation());
-
 	return (
 		<main
 			className={`${bodyFont.className} relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_20%_0%,_#ffffff_0%,_#fdf4f5_30%,_#faeaeb_58%,_#F8DBDD_100%)] px-6 py-10 text-[#00345B] md:px-10`}
@@ -114,7 +111,7 @@ export default async function BodaPage() {
 					<p className="mx-auto mt-3 max-w-2xl text-base text-[#004d7a] md:text-lg">
 						Solo podrán confirmar las personas incluidas en la lista de invitados.
 					</p>
-					<RsvpModal enabled={isRsvpEnabled} />
+					<RsvpModal />
 				</section>
 
 				<section className="rounded-3xl border border-[#F8DBDD]/80 bg-white/85 p-6 text-center md:p-8">

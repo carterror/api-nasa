@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
+import { track } from '@vercel/analytics';
 
 interface RsvpApiResponse {
 	invitedGuests?: string[];
@@ -10,7 +11,7 @@ interface RsvpApiResponse {
 
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
-export default function RsvpModal({ enabled }: { enabled: boolean }) {
+export default function RsvpModal() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [invitedGuests, setInvitedGuests] = useState<string[]>([]);
 	const [loadingGuests, setLoadingGuests] = useState(false);
@@ -41,7 +42,7 @@ export default function RsvpModal({ enabled }: { enabled: boolean }) {
 		let ignore = false;
 
 		async function loadGuests() {
-			if (!enabled) return;
+			track('My boda', {}, { flags: ['flag-boda-invitation'] });			
 			setLoadingGuests(true);
 			setFeedback("");
 
