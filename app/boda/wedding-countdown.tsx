@@ -46,9 +46,10 @@ function formatNumber(value: number) {
 }
 
 export default function WeddingCountdown() {
-	const [timeLeft, setTimeLeft] = useState<CountdownParts>(() => getCountdownParts());
+	const [timeLeft, setTimeLeft] = useState<CountdownParts | null>(null);
 
 	useEffect(() => {
+		setTimeLeft(getCountdownParts());
 		const timer = window.setInterval(() => {
 			setTimeLeft(getCountdownParts());
 		}, 1000);
@@ -60,13 +61,15 @@ export default function WeddingCountdown() {
 
 	const blocks = useMemo(
 		() => [
-			{ label: "días", value: timeLeft.days },
-			{ label: "horas", value: timeLeft.hours },
-			{ label: "min", value: timeLeft.minutes },
-			{ label: "seg", value: timeLeft.seconds },
+			{ label: "días", value: timeLeft?.days ?? 0 },
+			{ label: "horas", value: timeLeft?.hours ?? 0 },
+			{ label: "min", value: timeLeft?.minutes ?? 0 },
+			{ label: "seg", value: timeLeft?.seconds ?? 0 },
 		],
-		[timeLeft.days, timeLeft.hours, timeLeft.minutes, timeLeft.seconds],
+		[timeLeft?.days, timeLeft?.hours, timeLeft?.minutes, timeLeft?.seconds],
 	);
+
+	if (!timeLeft) return null;
 
 	if (timeLeft.isComplete) {
 		return (
