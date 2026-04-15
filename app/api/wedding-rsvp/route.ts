@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { collectRows, getQueryErrorMessage, runD1Query } from "../_lib/d1";
-import { canonicalizeName, getInvitedGuests } from "../../boda/invited-guests";
+import { canonicalizeName } from "../../boda/invited-guests";
 
 interface CreateRsvpPayload {
     name?: string;
@@ -15,7 +15,6 @@ function normalizeText(value: string): string {
 
 export async function GET() {
     try {
-        const invitedGuests = getInvitedGuests();
         const chunks = await runD1Query(
             "SELECT id, name, attending, guests_count, message, created_at FROM wedding_rsvp ORDER BY datetime(created_at) DESC LIMIT 200;",
         );
@@ -33,7 +32,7 @@ export async function GET() {
             createdAt: row.created_at,
         }));
 
-        return NextResponse.json({ confirmations, invitedGuests });
+        return NextResponse.json({ confirmations });
     } catch (error) {
         const message =
             error instanceof Error ? error.message : "Error interno al obtener confirmaciones.";
@@ -43,8 +42,6 @@ export async function GET() {
 
 export async function POST(request: Request) {
     try {
-        const invitedGuests = getInvitedGuests();
-        const invitedGuestSet = new Set(invitedGuests.map((guest) => canonicalizeName(guest)));
 
         const payload = (await request.json()) as CreateRsvpPayload;
         const name = typeof payload.name === "string" ? normalizeText(payload.name) : "";
@@ -69,20 +66,6 @@ export async function POST(request: Request) {
             return NextResponse.json(
                 { error: "El nombre no puede superar 80 caracteres." },
                 { status: 400 },
-            );
-        }
-
-        if (invitedGuestSet.size === 0) {
-            return NextResponse.json(
-                { error: "No hay invitados configurados para confirmar asistencia." },
-                { status: 500 },
-            );
-        }
-
-        if (!invitedGuestSet.has(canonicalizeName(name))) {
-            return NextResponse.json(
-                { error: "Tu nombre no esta en la lista de invitados habilitados." },
-                { status: 403 },
             );
         }
 

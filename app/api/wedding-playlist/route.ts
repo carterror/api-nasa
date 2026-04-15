@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { collectRows, getQueryErrorMessage, runD1Query } from "../_lib/d1";
-import { canonicalizeName, getInvitedGuests } from "../../boda/invited-guests";
+import { canonicalizeName } from "../../boda/invited-guests";
 
 interface CreatePlaylistPayload {
     name?: string;
@@ -40,9 +40,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
     try {
-        const invitedGuests = getInvitedGuests();
-        const invitedGuestSet = new Set(invitedGuests.map((guest) => canonicalizeName(guest)));
-
+ 
         const payload = (await request.json()) as CreatePlaylistPayload;
         const name = typeof payload.name === "string" ? normalizeText(payload.name) : "";
         const song = typeof payload.song === "string" ? normalizeText(payload.song) : "";
@@ -73,20 +71,6 @@ export async function POST(request: Request) {
             return NextResponse.json(
                 { error: "El nombre del artista no puede superar 100 caracteres." },
                 { status: 400 },
-            );
-        }
-
-        if (invitedGuestSet.size === 0) {
-            return NextResponse.json(
-                { error: "No hay invitados configurados." },
-                { status: 500 },
-            );
-        }
-
-        if (!invitedGuestSet.has(canonicalizeName(name))) {
-            return NextResponse.json(
-                { error: "Tu nombre no esta en la lista de invitados habilitados." },
-                { status: 403 },
             );
         }
 

@@ -37,6 +37,8 @@ export async function GET() {
 		const { bucket, url } = getSupabaseConfig();
 		const client = getSupaClient();
 		const { data, error } = await client.storage.from(bucket).listV2({ limit: 10 })
+		console.log({data, error});
+		
 		return NextResponse.json({ photos: data?.objects.map((obj) => ({ key: obj.name, lastModified: obj.updated_at, url: `${url}/storage/v1/object/public/${bucket}/${obj.name}` })), error });
 	} catch (error) {
 		const message = error instanceof Error ? error.message : "Error interno al listar fotos.";
