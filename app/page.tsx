@@ -1,11 +1,9 @@
 import Link from "next/link";
 import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
 import { collectRows, getQueryErrorMessage, runD1Query } from "./api/_lib/d1";
-import { getInvitedGuests } from "./boda/invited-guests";
 import HomeSummaryPanel from "./home-summary-panel";
 
 interface WeddingSummary {
-  invitedGuests: number;
   rsvpTotal: number;
   attendingTotal: number;
   declinedTotal: number;
@@ -68,7 +66,6 @@ async function getPhotosTotal(): Promise<number | null> {
 }
 
 async function getWeddingSummary(): Promise<WeddingSummary> {
-  const invitedGuests = getInvitedGuests().length;
 
   const [rsvpSummary, commentsSummary, photosTotal] = await Promise.all([
     (async () => {
@@ -120,7 +117,6 @@ async function getWeddingSummary(): Promise<WeddingSummary> {
   ]);
 
   return {
-    invitedGuests,
     rsvpTotal: rsvpSummary.rsvpTotal,
     attendingTotal: rsvpSummary.attendingTotal,
     declinedTotal: rsvpSummary.declinedTotal,

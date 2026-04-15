@@ -1,76 +1,24 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-
-interface CommentsApiResponse {
-	invitedGuests?: string[];
-	error?: string;
-}
 
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
 export default function CommentsModal() {
 	const [isOpen, setIsOpen] = useState(false);
-	const [invitedGuests, setInvitedGuests] = useState<string[]>([]);
-	const [loadingGuests, setLoadingGuests] = useState(false);
 	const [name, setName] = useState("");
 	const [comment, setComment] = useState("");
 	const [status, setStatus] = useState<SubmitStatus>("idle");
 	const [feedback, setFeedback] = useState("");
 
 	const canSubmit = useMemo(() => {
-		if (!name || !comment || loadingGuests || invitedGuests.length === 0) {
+		if (!name || !comment) {
 			return false;
 		}
 
 		return comment.length <= 500;
-	}, [comment, invitedGuests.length, loadingGuests, name]);
-
-	useEffect(() => {
-		if (!isOpen || invitedGuests.length > 0) {
-			return;
-		}
-
-		let ignore = false;
-
-		async function loadGuests() {
-			setLoadingGuests(true);
-			setFeedback("");
-
-			try {
-				const response = await fetch("/api/wedding-comments", { method: "GET" });
-				const data: CommentsApiResponse = await response.json();
-
-				if (!response.ok) {
-					throw new Error(data.error ?? "No pudimos cargar la lista de invitados.");
-				}
-
-				if (!ignore) {
-					setInvitedGuests(data.invitedGuests ?? []);
-				}
-			} catch (error) {
-				if (!ignore) {
-					setFeedback(
-						error instanceof Error
-							? error.message
-							: "No pudimos cargar la lista de invitados.",
-					);
-					setStatus("error");
-				}
-			} finally {
-				if (!ignore) {
-					setLoadingGuests(false);
-				}
-			}
-		}
-
-		loadGuests();
-
-		return () => {
-			ignore = true;
-		};
-	}, [invitedGuests.length, isOpen]);
+	}, [comment, name]);
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -144,28 +92,16 @@ export default function CommentsModal() {
 							<label className="block text-sm font-medium text-[#00345B]" htmlFor="comment-name">
 								Nombre del invitado
 							</label>
-							<select
+							<input
 								id="comment-name"
+								type="text"
 								value={name}
 								onChange={(event) => setName(event.target.value)}
-								disabled={loadingGuests || invitedGuests.length === 0 || status === "submitting"}
+								disabled={status === "submitting"}
+								placeholder="Tu nombre"
 								className="w-full rounded-xl border border-[#F8DBDD] bg-[#fff5f6] px-4 py-3 text-[#00345B]"
-							>
-								<option value="">
-									{loadingGuests
-										? "Cargando invitados..."
-										: invitedGuests.length > 0
-											? "Selecciona tu nombre"
-											: "No hay invitados configurados"}
-								</option>
-								{invitedGuests.map((guestName) => (
-									<option key={guestName} value={guestName}>
-										{guestName}
-									</option>
-								))}
-							</select>
-
-							<div>
+							/>
+					<div>
 								<label className="block text-sm font-medium text-[#00345B]" htmlFor="comment-text">
 									Tu mensaje
 								</label>

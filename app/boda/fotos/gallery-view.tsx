@@ -77,7 +77,7 @@ export default function GalleryView() {
 
 				{status !== "loading" && photos.length === 0 ? (
 					<p className="text-center text-[#004d7a]">
-						Aun no hay fotos publicas. Sube la primera imagen del gran dia.
+						Aun no hay fotos públicas. Sube la primera imagen del gran dia.
 					</p>
 				) : null}
 
@@ -91,11 +91,12 @@ export default function GalleryView() {
 								<div className="relative h-64 w-full">
 									<Image
 										src={photo.url}
-										alt="Foto de invitado"
+										alt={`Foto de invitado ${photo.key}`}
 										fill
 										sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
 										className="object-cover"
 										unoptimized
+										loading="eager"									
 									/>
 								</div>
 							) : (

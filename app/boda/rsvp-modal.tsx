@@ -161,26 +161,18 @@ export default function RsvpModal() {
 							<label className="block text-sm font-medium text-[#00345B]" htmlFor="rsvp-name">
 								Nombre del invitado
 							</label>
-							<select
-								id="rsvp-name"
+
+							<input
+							id="rsvp-name"
 								value={name}
 								onChange={(event) => setName(event.target.value)}
-								disabled={loadingGuests || invitedGuests.length === 0 || status === "submitting"}
 								className="w-full rounded-xl border border-[#F8DBDD] bg-[#fff5f6] px-4 py-3 text-[#00345B]"
-							>
-								<option value="">
-									{loadingGuests
-										? "Cargando invitados..."
-										: invitedGuests.length > 0
-											? "Selecciona tu nombre"
-											: "No hay invitados configurados"}
-								</option>
-								{invitedGuests.map((guestName) => (
-									<option key={guestName} value={guestName}>
-										{guestName}
-									</option>
-								))}
-							</select>
+	
+								type="text"
+	
+								disabled={status === "submitting"}
+								placeholder="Tu nombre"
+							/>
 
 							<fieldset className="space-y-2">
 								<legend className="text-sm font-medium text-[#00345B]">Asistiras?</legend>

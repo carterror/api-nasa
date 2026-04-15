@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 
 interface WeddingSummary {
-  invitedGuests: number;
   rsvpTotal: number;
   attendingTotal: number;
   declinedTotal: number;
@@ -69,7 +68,6 @@ export default function HomeSummaryPanel({ summary }: HomeSummaryPanelProps) {
 
   const summaryCards = useMemo(
     () => [
-      { label: "Invitados habilitados", value: summary.invitedGuests },
       { label: "RSVP registrados", value: summary.rsvpTotal },
       {
         label: "Asistiran",
