@@ -13,8 +13,6 @@ type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
 export default function RsvpModal() {
 	const [isOpen, setIsOpen] = useState(false);
-	const [invitedGuests, setInvitedGuests] = useState<string[]>([]);
-	const [loadingGuests, setLoadingGuests] = useState(false);
 	const [name, setName] = useState("");
 	const [attending, setAttending] = useState<boolean | null>(null);
 	const [guestsCount, setGuestsCount] = useState(0);
@@ -23,7 +21,7 @@ export default function RsvpModal() {
 	const [feedback, setFeedback] = useState("");
 
 	const canSubmit = useMemo(() => {
-		if (!name || attending === null || loadingGuests || invitedGuests.length === 0) {
+		if (!name || attending === null) {
 			return false;
 		}
 
@@ -32,10 +30,10 @@ export default function RsvpModal() {
 		}
 
 		return true;
-	}, [attending, guestsCount, invitedGuests.length, loadingGuests, name]);
+	}, [attending, guestsCount, name]);
 
 	useEffect(() => {
-		if (!isOpen || invitedGuests.length > 0) {
+		if (!isOpen) {
 			return;
 		}
 		
@@ -43,7 +41,6 @@ export default function RsvpModal() {
 
 		async function loadGuests() {
 			track('My boda', {}, { flags: ['flag-boda-invitation'] });			
-			setLoadingGuests(true);
 			setFeedback("");
 
 			try {
@@ -52,10 +49,6 @@ export default function RsvpModal() {
 
 				if (!response.ok) {
 					throw new Error(data.error ?? "No pudimos cargar la lista de invitados.");
-				}
-
-				if (!ignore) {
-					setInvitedGuests(data.invitedGuests ?? []);
 				}
 			} catch (error) {
 				if (!ignore) {
@@ -66,10 +59,6 @@ export default function RsvpModal() {
 					);
 					setStatus("error");
 				}
-			} finally {
-				if (!ignore) {
-					setLoadingGuests(false);
-				}
 			}
 		}
 
@@ -78,7 +67,7 @@ export default function RsvpModal() {
 		return () => {
 			ignore = true;
 		};
-	}, [invitedGuests.length, isOpen]);
+	}, [isOpen]);
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
