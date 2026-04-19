@@ -63,6 +63,9 @@ export default function PhotoUploadSection({ onUploadComplete }: PhotoUploadSect
 		}
 	}
 
+	const DRIVE_FALLBACK_URL =
+		"https://drive.google.com/drive/folders/1qwjPL6pKCOLomuKVX0HzZNOyJry-w1S-";
+
 	return (
 		<section className="rounded-3xl border border-[#F8DBDD]/80 bg-white/85 p-6 md:p-8">
 			<div className="text-center">
@@ -114,13 +117,28 @@ export default function PhotoUploadSection({ onUploadComplete }: PhotoUploadSect
 			</form>
 
 			{feedback ? (
-				<p
-					className={`mt-4 text-center text-sm md:text-base ${
-						status === "error" ? "text-[#9f2a3f]" : "text-[#004d7a]"
-					}`}
-				>
-					{feedback}
-				</p>
+				<div className="mt-4 text-center">
+					<p
+						className={`text-sm md:text-base ${
+							status === "error" ? "text-[#9f2a3f]" : "text-[#004d7a]"
+						}`}
+					>
+						{feedback}
+					</p>
+					{status === "error" && (
+						<p className="mt-3 text-xl text-[#004d7a]">
+							¿Problemas para subir?{" "}
+							<a
+								href={DRIVE_FALLBACK_URL}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="font-semibold underline underline-offset-2 hover:text-[#00345B]"
+							>
+								Sube tus fotos directamente a Google Drive
+							</a>
+						</p>
+					)}
+				</div>
 			) : null}
 		</section>
 	);
