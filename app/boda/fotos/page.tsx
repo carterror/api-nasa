@@ -23,7 +23,7 @@ export default function BodaFotosPage() {
 		>
 			<Link
 				href="/boda"
-				className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#00345B]/20 px-4 py-2 text-sm font-medium text-[#00345B] transition hover:bg-[#00345B]/10"
+				className="mx-4 inline-flex items-center gap-2 rounded-full border border-[#00345B]/20 px-4 py-2 text-sm font-medium text-[#00345B] transition hover:bg-[#00345B]/10"
 			>
 				← Volver a la boda
 			</Link>

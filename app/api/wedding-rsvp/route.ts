@@ -1,9 +1,14 @@
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 import { collectRows, getQueryErrorMessage, runD1Query } from "../_lib/d1";
 import { canonicalizeName } from "../../boda/invited-guests";
 
+
+const resend = new Resend(process.env.RESEND_API_KEY ?? '');
+
 interface CreateRsvpPayload {
     name?: string;
+    email?: string;
     attending?: boolean;
     guestsCount?: number;
     message?: string;
@@ -45,6 +50,7 @@ export async function POST(request: Request) {
 
         const payload = (await request.json()) as CreateRsvpPayload;
         const name = typeof payload.name === "string" ? normalizeText(payload.name) : "";
+        const email = typeof payload.email === "string" ? normalizeText(payload.email) : "";
         const attending = payload.attending;
         const guestsCount =
             typeof payload.guestsCount === "number" ? Math.floor(payload.guestsCount) : 0;
@@ -53,6 +59,10 @@ export async function POST(request: Request) {
 
         if (!name) {
             return NextResponse.json({ error: "Debes enviar el nombre." }, { status: 400 });
+        }
+
+        if (!email || !/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(email)) {
+            return NextResponse.json({ error: "Debes enviar un correo valido." }, { status: 400 });
         }
 
         if (typeof attending !== "boolean") {
@@ -84,6 +94,19 @@ export async function POST(request: Request) {
         if (queryError) {
             return NextResponse.json({ error: queryError }, { status: 500 });
         }
+
+        await resend.emails.send({
+            to: email,
+            template: {
+                id: 'wedding-confirmation',
+                variables: {
+                    event_time: '2:00 PM',
+                    first_name: name.split(' ')[0],
+                    venue_address: 'https://www.google.com/maps/place/La+Toscana+Garden/@-0.3016376,-78.4931584,136m/data=!3m1!1e3!4m6!3m5!1s0x91d5a3cb2d557cbb:0xdd6c78080b4f3e93!8m2!3d-0.3016197!4d-78.4932381!16s%2Fg%2F11yqzry56b?entry=ttu&g_ep=EgoyMDI2MDQxOS4wIKXMDSoASAFQAw%3D%3D',
+                    venue_name: 'Quinta Ontaneda Lote 111 Conocoto, Quito',
+                },
+            },
+        } as Parameters<typeof resend.emails.send>[0]);
 
         return NextResponse.json({
             message: "Confirmacion registrada correctamente.",

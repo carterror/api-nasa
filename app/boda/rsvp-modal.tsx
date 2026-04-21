@@ -14,6 +14,7 @@ type SubmitStatus = "idle" | "submitting" | "success" | "error";
 export default function RsvpModal() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
 	const [attending, setAttending] = useState<boolean | null>(null);
 	const [guestsCount, setGuestsCount] = useState(0);
 	const [message, setMessage] = useState("");
@@ -21,7 +22,7 @@ export default function RsvpModal() {
 	const [feedback, setFeedback] = useState("");
 
 	const canSubmit = useMemo(() => {
-		if (!name || attending === null) {
+		if (!name || !email || attending === null) {
 			return false;
 		}
 
@@ -85,6 +86,7 @@ export default function RsvpModal() {
 				body: JSON.stringify({
 					name,
 					attending,
+					email,
 					guestsCount: attending ? guestsCount : 0,
 					message,
 				}),
@@ -98,6 +100,7 @@ export default function RsvpModal() {
 			setStatus("success");
 			setFeedback(data.message ?? "Confirmacion registrada correctamente.");
 			setName("");
+			setEmail("");
 			setAttending(null);
 			setGuestsCount(0);
 			setMessage("");
@@ -162,6 +165,20 @@ export default function RsvpModal() {
 								disabled={status === "submitting"}
 								placeholder="Tu nombre"
 							/>
+
+													<label className="block text-sm font-medium text-[#00345B]" htmlFor="rsvp-email">
+							Correo electronico
+						</label>
+
+						<input
+							id="rsvp-email"
+							value={email}
+							onChange={(event) => setEmail(event.target.value)}
+							className="w-full rounded-xl border border-[#F8DBDD] bg-[#fff5f6] px-4 py-3 text-[#00345B]"
+							type="email"
+							disabled={status === "submitting"}
+							placeholder="tu@correo.com"
+						/>
 
 							<fieldset className="space-y-2">
 								<legend className="text-sm font-medium text-[#00345B]">Asistiras?</legend>
